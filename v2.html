@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Ccircle cx='11' cy='20' r='8.5' fill='%23cfe2d8'/%3E%3Ccircle cx='21' cy='17' r='7' fill='%23e6cdb8'/%3E%3Ccircle cx='14' cy='9' r='6.5' fill='%23e3d6a0'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Libre+Franklin:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <style>
 :root {
@@ -49,8 +49,8 @@
   --t-gov: #ece2c4;
   --edge: #cdd1d8;
   --r: 8px;
-  --font-display: "Libre Franklin", "Franklin Gothic Medium", "Helvetica Neue", Arial, sans-serif;
-  --font-body: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-display: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-body: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
@@ -61,7 +61,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 a { color: inherit; text-underline-offset: 2px; }
-h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; line-height: 1.15; letter-spacing: -.012em; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; line-height: 1.15; letter-spacing: -.02em; }
 p { margin: 0; }
 :focus-visible { outline: 3px solid var(--a-growth); outline-offset: 2px; }
 .ic { flex: none; display: block; }
@@ -105,7 +105,7 @@ p { margin: 0; }
 .view { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; min-width: 0; }
 .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 6px 16px; }
 .head h1 { font-size: clamp(26px, 3.4vw, 34px); letter-spacing: -.024em; }
-.head p { color: var(--ink-2); font-weight: 600; }
+.head p, .auth-lede { color: var(--ink-2); font-weight: 600; }
 .card { background: var(--card); border: 1px solid var(--edge); border-radius: 12px; }
 .card.key { border: 1.5px solid var(--ink); }
 .pad { padding: 16px 18px; }
@@ -868,7 +868,7 @@ button.eng:hover { border-color: var(--ink); }
   --t-gov: #e8e1bf;
 }
 :focus-visible { outline: 2px solid var(--primary); }
-.head h1, .intro-text b { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; font-weight: 600; letter-spacing: -.012em; }
+.head h1, .intro-text b, .auth-card h1 { font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em; }
 
 /* Quieter outlines */
 .top { border-bottom: 1px solid var(--line); }
@@ -916,11 +916,60 @@ input[type="range"]::-moz-range-progress { background: var(--primary); }
   .head h1 { font-size: 26px; }
   .wr-teaser .cta { width: 100%; }
 }
+
+/* Sign-in page: shown instead of the app until someone signs in or continues as a guest.
+   Practice accounts live in this browser only. */
+body.signed-out .top, body.signed-out .shell, body.signed-out .fab, body.signed-out .ask { display: none !important; }
+body.signed-out .auth[hidden] { display: grid !important; }
+.auth { min-height: calc(100vh - 90px); display: grid; place-items: center; padding-block: 40px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.auth-in { width: min(420px, 100%); display: grid; gap: 20px; }
+.auth .brand { justify-self: center; font-size: 24px; }
+.auth-card { padding: 24px 22px 20px; display: grid; gap: 18px; }
+.auth-card h1 { font-size: 26px; }
+.auth-lede { margin-top: 6px; }
+.auth-tabs { display: grid; grid-template-columns: 1fr 1fr; }
+.auth-tabs .chip { justify-content: center; }
+.auth-form { display: grid; gap: 14px; }
+.field { display: grid; gap: 7px; }
+.field input { width: 100%; min-width: 0; border: 1px solid var(--edge); border-radius: var(--r); padding: 9px 12px; background: var(--card); color: var(--ink); font-weight: 500; font-size: 16px; }
+.field input[aria-invalid="true"] { border-color: var(--bad); }
+.auth-err { background: var(--bad-bg); color: var(--bad); border-radius: var(--r); padding: 9px 12px; font-size: 14px; font-weight: 600; }
+.auth-form .cta { width: 100%; padding-block: 13px; }
+.auth-guest { justify-self: center; }
+.auth-card > .note { text-align: center; }
+
+/* Account button in the task bar */
+.acct { display: inline-flex; align-items: center; gap: 7px; padding: 3px 10px 3px 3px; }
+.acct-av { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--primary, var(--sticker)); color: #fff; font: 700 11px/1 var(--font-display); letter-spacing: 0; }
+.acct-av.big { width: 48px; height: 48px; font-size: 18px; }
+@media (max-width: 560px) { .acct-name { display: none; } .acct { padding-right: 3px; } }
 </style>
 <!-- Address of your chat server. Leave empty and the guide uses its built-in quick answers. See README.md. -->
 <script>window.RULESTACK_CHAT_URL = '';</script>
 </head>
 <body>
+<script>try { if (!localStorage.getItem('rulestack:session:v1')) document.body.classList.add('signed-out'); } catch (e) { /* storage blocked */ }</script>
+<main class="auth" id="auth" hidden aria-labelledby="h-auth">
+  <div class="auth-in">
+    <span class="brand"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="11" cy="20" r="8.5" fill="#cfe2d8" stroke="#1f3a2d" stroke-width="1.5"/><circle cx="21" cy="17" r="7" fill="#e6cdb8" stroke="#1f3a2d" stroke-width="1.5"/><circle cx="14" cy="9" r="6.5" fill="#e3d6a0" stroke="#1f3a2d" stroke-width="1.5"/></svg><span>Rulestack</span></span>
+    <section class="card auth-card">
+      <div><h1 id="h-auth">Welcome back</h1><p class="auth-lede" id="auth-lede">Sign in to pick up your practice portfolio.</p></div>
+      <div class="chips auth-tabs" role="group" aria-label="Account">
+        <button type="button" class="chip" data-auth="in" aria-pressed="true">Sign in</button>
+        <button type="button" class="chip" data-auth="up" aria-pressed="false">Create account</button>
+      </div>
+      <form class="auth-form" id="auth-form" novalidate>
+        <div class="field" id="f-name" hidden><label class="ctl-label" for="auth-name">Name</label><input type="text" id="auth-name" autocomplete="name" maxlength="60" spellcheck="false"></div>
+        <div class="field"><label class="ctl-label" for="auth-email">Email</label><input type="email" id="auth-email" autocomplete="email" maxlength="120" spellcheck="false" required></div>
+        <div class="field"><label class="ctl-label" for="auth-pass">Password</label><input type="password" id="auth-pass" autocomplete="current-password" maxlength="200" required aria-describedby="auth-hint"><p class="note" id="auth-hint" hidden>At least 8 characters.</p></div>
+        <p class="auth-err" id="auth-err" role="alert" hidden></p>
+        <button type="submit" class="cta" id="auth-go">Sign in</button>
+      </form>
+      <button type="button" class="ghost auth-guest" data-auth="guest">Continue as guest</button>
+      <p class="note">Practice accounts are saved in this browser only. Don’t reuse a real password.</p>
+    </section>
+  </div>
+</main>
 <header class="top">
   <div class="top-in">
     <button type="button" class="brand" data-act="go:rules" aria-label="Rulestack, back to your rules">
@@ -931,6 +980,7 @@ input[type="range"]::-moz-range-progress { background: var(--primary); }
     <div class="top-tools">
       <span class="tag">Practice mode</span>
       <button type="button" class="pro" id="btn-pro" data-act="pro" aria-pressed="false" title="Adds the Fine-tune and Order steps, plus extra data">Advanced</button>
+      <button type="button" class="pro acct" id="btn-acct" data-act="acct" aria-haspopup="dialog"><span class="acct-av" id="acct-av" aria-hidden="true"></span><span class="acct-name" id="acct-name"></span></button>
     </div>
   </div>
   <div class="task" aria-hidden="true"><span id="task-fill"></span></div>
@@ -942,7 +992,7 @@ input[type="range"]::-moz-range-progress { background: var(--primary); }
   <main class="stage">
     <section class="view" id="view-rules" aria-labelledby="h-rules">
       <div class="card intro" id="intro">
-        <div class="intro-text"><b>Welcome to Rulestack</b><span>Build a practice portfolio that matches your values. No real money, no sign-up.</span></div>
+        <div class="intro-text"><b>Welcome to Rulestack</b><span>Build a practice portfolio that matches your values. No real money involved.</span></div>
         <ol aria-label="How it works"><li><i>1</i>Set your values</li><li><i>2</i>See what matches</li><li><i>3</i>Build a mix</li><li><i>4</i>See your impact</li></ol>
         <button type="button" class="ghost" data-act="introok">Got it</button>
       </div>
@@ -2532,8 +2582,27 @@ function solveAll(items, levels, st, scope) {
 
 
 /* ============ UI ============ */
-var STORE_KEY = 'rulestack:v3';
-var DATA_KEY = 'rulestack:data:v1';
+/* ---------- Practice accounts ----------
+   Accounts live in this browser only (localStorage), so this is practice, not real security.
+   Each account keeps its own progress under its own keys; a guest uses the original keys. */
+var ACCT_KEY = 'rulestack:accounts:v1', SESSION_KEY = 'rulestack:session:v1';
+var GUEST = { guest: true, name: 'Guest' };
+function acctAll() {
+  try {
+    var a = JSON.parse(localStorage.getItem(ACCT_KEY) || '[]');
+    return Array.isArray(a) ? a.filter(function (x) { return x && typeof x.id === 'string' && /^[a-f0-9]+$/.test(x.id) && typeof x.email === 'string' && typeof x.hash === 'string' && typeof x.salt === 'string'; }) : [];
+  } catch (e) { return []; }
+}
+function acctUser(id) {
+  if (id === 'guest') return GUEST;
+  var a = acctAll().filter(function (x) { return x.id === id; })[0];
+  return a ? { id: a.id, name: String(a.name || ''), email: a.email } : null;
+}
+function sessionUser() { try { return acctUser(localStorage.getItem(SESSION_KEY)); } catch (e) { return null; } }
+function keySuffix(u) { return u && u.id ? ':' + u.id : ''; }
+var USER = sessionUser();
+var STORE_KEY = 'rulestack:v3' + keySuffix(USER);
+var DATA_KEY = 'rulestack:data:v1' + keySuffix(USER);
 var STEPS = [{ id: 'rules', label: 'Values' }, { id: 'matches', label: 'Matches' }, { id: 'mix', label: 'Mix' }, { id: 'swap', label: 'Fine-tune', adv: true }, { id: 'buy', label: 'Order', adv: true }, { id: 'flow', label: 'Impact' }];
 // The main journey is four steps. Fine-tune and Order join it when Advanced is on.
 function stepsNow() { return STEPS.filter(function (s) { return !s.adv || state.pro; }); }
@@ -4504,6 +4573,8 @@ function act(p, el) {
     case 'show': state.show = p[1]; freshen($('#view-matches')); paint(); save(); break;
     case 'open': openDetail(p[1]); break;
     case 'close': $('#sheet').close(); break;
+    case 'acct': acctSheet(); break;
+    case 'signout': signOut(); break;
     case 'save':
       var u = state.saved.indexOf(p[1]);
       if (u >= 0) state.saved.splice(u, 1); else state.saved.push(p[1]);
@@ -5234,7 +5305,133 @@ function agentLocal(q) {
   return 'I can explain a company, a rule or a step. Try “why is Tesla here?”, “what is an LP?” or “compare Apple and Tesla”.';
 }
 
-boot();
+/* ---------- Sign-in page ---------- */
+var AUTH_MODE = 'in';
+function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }
+function randHex(n) { var a = new Uint8Array(n); crypto.getRandomValues(a); return hex(a.buffer); }
+// Salted PBKDF2 where the browser offers Web Crypto (localhost, https). On a plain-http address
+// it falls back to a simple mix: still never the password itself, but practice-grade only.
+function passHash(pass, salt) {
+  var c = window.crypto && crypto.subtle;
+  if (c && window.TextEncoder) {
+    var enc = new TextEncoder();
+    return c.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveBits']).then(function (k) {
+      return c.deriveBits({ name: 'PBKDF2', salt: enc.encode(salt), iterations: 150000, hash: 'SHA-256' }, k, 256);
+    }).then(function (b) { return 'p2:' + hex(b); });
+  }
+  var h = 2166136261, str = salt + ':' + pass;
+  for (var i = 0; i < 2000; i++) for (var j = 0; j < str.length; j++) { h ^= str.charCodeAt(j); h = Math.imul(h, 16777619) >>> 0; }
+  return Promise.resolve('f1:' + h.toString(16));
+}
+function authMode(m) {
+  var up = m === 'up';
+  AUTH_MODE = m;
+  document.querySelectorAll('.auth-tabs .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-auth') === m)); });
+  $('#h-auth').textContent = up ? 'Create your account' : 'Welcome back';
+  $('#auth-lede').textContent = up ? 'Keep your values and practice mixes under your own name.' : 'Sign in to pick up your practice portfolio.';
+  $('#f-name').hidden = !up;
+  $('#auth-hint').hidden = !up;
+  $('#auth-pass').setAttribute('autocomplete', up ? 'new-password' : 'current-password');
+  $('#auth-go').textContent = up ? 'Create account' : 'Sign in';
+  authErr('');
+}
+function authErr(msg, field) {
+  var e = $('#auth-err');
+  e.textContent = msg;
+  e.hidden = !msg;
+  ['#auth-name', '#auth-email', '#auth-pass'].forEach(function (f) { $(f).removeAttribute('aria-invalid'); });
+  if (field) { $(field).setAttribute('aria-invalid', 'true'); $(field).focus(); }
+}
+// Copies progress made before accounts existed into the first account.
+function copyLegacy(id) {
+  [['rulestack:v3', 'rulestack:v3:' + id], ['rulestack:data:v1', 'rulestack:data:v1:' + id]].forEach(function (k) {
+    var v = localStorage.getItem(k[0]);
+    if (v != null) localStorage.setItem(k[1], v);
+  });
+}
+function authSubmit(e) {
+  e.preventDefault();
+  var up = AUTH_MODE === 'up', go = $('#auth-go');
+  var name = $('#auth-name').value.trim(), email = $('#auth-email').value.trim().toLowerCase(), pass = $('#auth-pass').value;
+  if (up && !name) return authErr('Enter your name.', '#auth-name');
+  if (!email) return authErr('Enter your email.', '#auth-email');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return authErr('That doesn’t look like an email address.', '#auth-email');
+  if (!pass) return authErr('Enter your password.', '#auth-pass');
+  if (up && pass.length < 8) return authErr('Use at least 8 characters for your password.', '#auth-pass');
+  var all = acctAll(), found = all.filter(function (a) { return a.email === email; })[0];
+  if (up && found) return authErr('There’s already an account with that email. Sign in instead.', '#auth-email');
+  if (!up && !found) return authErr('That email and password don’t match.', '#auth-pass');
+  authErr('');
+  go.disabled = true;
+  go.textContent = up ? 'Creating account…' : 'Signing in…';
+  var salt = up ? randHex(16) : found.salt;
+  passHash(pass, salt).then(function (h) {
+    if (!up) {
+      if (h !== found.hash) throw new Error('mismatch');
+      return found.id;
+    }
+    var acct = { id: randHex(8), name: name, email: email, salt: salt, hash: h, created: new Date().toISOString() };
+    if (!all.length) copyLegacy(acct.id);
+    all.push(acct);
+    localStorage.setItem(ACCT_KEY, JSON.stringify(all));
+    return acct.id;
+  }).then(signIn, function (err) {
+    go.disabled = false;
+    go.textContent = up ? 'Create account' : 'Sign in';
+    if (err && err.message === 'mismatch') authErr('That email and password don’t match.', '#auth-pass');
+    else authErr('This browser won’t save accounts. Continue as guest instead.');
+  });
+}
+function signIn(id) {
+  try { localStorage.setItem(SESSION_KEY, id); } catch (e) { /* a guest still works for this visit */ }
+  USER = acctUser(id) || GUEST;
+  STORE_KEY = 'rulestack:v3' + keySuffix(USER);
+  DATA_KEY = 'rulestack:data:v1' + keySuffix(USER);
+  state = load();
+  userData = loadData();
+  $('#auth-pass').value = '';
+  $('#auth').hidden = true;
+  $('.stage').hidden = false;
+  document.body.classList.remove('signed-out');
+  paintAcct();
+  boot();
+}
+function signOut() {
+  try { localStorage.removeItem(SESSION_KEY); } catch (e) { /* ignore */ }
+  location.replace(location.pathname);
+}
+function initials(n) {
+  var p = String(n || '').trim().split(/\s+/).filter(Boolean);
+  return p.length ? (p[0][0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase() : '?';
+}
+function paintAcct() {
+  $('#acct-av').textContent = USER.guest ? 'G' : initials(USER.name);
+  $('#acct-name').textContent = USER.guest ? 'Guest' : USER.name.split(/\s+/)[0];
+  $('#btn-acct').setAttribute('aria-label', $('#acct-name').textContent + ', your account');
+}
+function acctSheet() {
+  var g = !!USER.guest;
+  openSheet('<div class="sheet-head"><span class="acct-av big" aria-hidden="true">' + esc(g ? 'G' : initials(USER.name)) + '</span><div><h2>' + esc(g ? 'Guest' : USER.name) + '</h2><p>' + esc(g ? 'Not signed in' : USER.email) + '</p></div><button type="button" class="x-btn" data-act="close" aria-label="Close" style="align-self:start">' + icon('x', 14) + '</button></div>' +
+    '<p class="note">' + (g ? 'Your progress is saved in this browser. Create an account to keep separate portfolios for different people on this browser.' : 'Your values and mixes are saved to this account, in this browser only.') + '</p>' +
+    '<div class="row-end"><button type="button" class="' + (g ? 'cta' : 'ghost') + '" data-act="signout">' + (g ? 'Sign in or create account' : 'Sign out') + '</button></div>');
+}
+function authStart() {
+  document.querySelectorAll('[data-auth]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.getAttribute('data-auth');
+      if (m === 'guest') signIn('guest'); else authMode(m);
+    });
+  });
+  $('#auth-form').addEventListener('submit', authSubmit);
+  if (USER) { $('#auth').hidden = true; document.body.classList.remove('signed-out'); paintAcct(); boot(); return; }
+  document.body.classList.add('signed-out');
+  $('#auth').hidden = false;
+  $('.stage').hidden = true;
+  authMode(acctAll().length ? 'in' : 'up');
+  $(AUTH_MODE === 'up' ? '#auth-name' : '#auth-email').focus();
+}
+
+authStart();
 
 })();
 </script>
