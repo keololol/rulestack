@@ -1,0 +1,7 @@
+# Private keys: never commit
+.env
+
+# Local backups of older versions (Git keeps history from now on)
+v2-backup.html
+v2-before-nature.html
+v2-beige-login.html
